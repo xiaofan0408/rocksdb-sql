@@ -22,7 +22,7 @@ public class RocksDbSql {
         storage = new Storage(path);
         sqlParser = new SqlParser();
         sqlPlanner = new SqlPlanner();
-        sqlExecutor = new SqlExecutor();
+        sqlExecutor = new SqlExecutor(storage);
     }
 
     public Result execute(String database, String sql){
