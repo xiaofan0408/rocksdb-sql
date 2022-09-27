@@ -1,10 +1,18 @@
 package com.xiaofan0408.storage;
 
-public class RocksIteratorWrapper implements RocksIteratorInterface, Closeable{
+import com.xiaofan0408.base.DbException;
+import org.rocksdb.RocksDBException;
+import org.rocksdb.RocksIterator;
+import org.rocksdb.RocksIteratorInterface;
+
+import java.io.Closeable;
+import java.nio.ByteBuffer;
+
+public class RocksIteratorWrapper implements RocksIteratorInterface, Closeable {
 
     private RocksIterator iterator;
 
-    public RocksIteratorWrapper(@Nonnull RocksIterator iterator) {
+    public RocksIteratorWrapper(RocksIterator iterator) {
         this.iterator = iterator;
     }
 
@@ -76,7 +84,7 @@ public class RocksIteratorWrapper implements RocksIteratorInterface, Closeable{
         try {
             iterator.status();
         } catch (RocksDBException ex) {
-            throw new LoghubRuntimeException("Internal exception found in RocksDB", ex);
+            throw new DbException("Internal exception found in RocksDB", ex);
         }
     }
 
