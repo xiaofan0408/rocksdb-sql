@@ -2,6 +2,7 @@ package com.xiaofan0408.parser;
 
 import com.xiaofan0408.parser.antlr.SqlBaseBaseVisitor;
 import com.xiaofan0408.parser.antlr.SqlBaseParser;
+import com.xiaofan0408.parser.operate.CreateTable;
 import com.xiaofan0408.parser.operate.OperateBase;
 
 
@@ -21,9 +22,9 @@ public class SqlVisitor extends SqlBaseBaseVisitor<OperateBase> {
 
     @Override
     public OperateBase visitCreateTableStatement(SqlBaseParser.CreateTableStatementContext ctx) {
-       OperateBase operateBase = new OperateBase();
+       CreateTable operateBase = new CreateTable();
        String tableName = ctx.createStatement().tablenName.getText();
-
+       operateBase.setTableName(tableName);
        return operateBase;
     }
 
