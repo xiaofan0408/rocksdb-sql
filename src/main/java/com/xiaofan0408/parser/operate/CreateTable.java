@@ -13,5 +13,9 @@ public class CreateTable extends OperateBase{
        return this.tableName;
    }
 
+   @Override
+   public String toString() {
+       return "databese:" + this.getDatabase() + ", tableName:" + this.tableName;
+   }
 
 }

@@ -2,11 +2,17 @@ package com.xiaofan0408.parser;
 
 import com.xiaofan0408.parser.antlr.SqlBaseBaseVisitor;
 import com.xiaofan0408.parser.antlr.SqlBaseParser;
+import com.xiaofan0408.parser.antlr.SqlBaseParser.SingleStatementContext;
 import com.xiaofan0408.parser.operate.CreateTable;
 import com.xiaofan0408.parser.operate.OperateBase;
 
 
 public class SqlVisitor extends SqlBaseBaseVisitor<OperateBase> {
+
+    @Override
+    public OperateBase visitSingleStatement(SingleStatementContext ctx) {
+        return ctx.statement().accept(this);
+    }
 
     @Override
     public OperateBase visitShowSchemaStatement(SqlBaseParser.ShowSchemaStatementContext ctx) {
