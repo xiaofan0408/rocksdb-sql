@@ -18,4 +18,12 @@ public class ColumnDefinition {
     public String getColumnType() {
         return columnType;
     }
+
+    @Override
+    public String toString() {
+        return "ColumnDefinition{" +
+                "columnType='" + columnType + '\'' +
+                ", columnName='" + columnName + '\'' +
+                '}';
+    }
 }

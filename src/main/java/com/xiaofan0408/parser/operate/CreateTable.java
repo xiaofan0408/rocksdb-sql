@@ -32,9 +32,12 @@ public class CreateTable extends OperateBase{
         this.columns.add(column);
     }
 
-   @Override
-   public String toString() {
-       return "databese:" + this.getDatabase() + ", tableName:" + this.tableName;
-   }
-
+    @Override
+    public String toString() {
+        return "CreateTable{" +
+                "database=" + this.getDatabase() + ","+
+                "tableName='" + tableName + '\'' +
+                ", columns=" + columns +
+                '}';
+    }
 }

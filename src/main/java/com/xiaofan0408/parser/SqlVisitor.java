@@ -3,8 +3,11 @@ package com.xiaofan0408.parser;
 import com.xiaofan0408.parser.antlr.SqlBaseBaseVisitor;
 import com.xiaofan0408.parser.antlr.SqlBaseParser;
 import com.xiaofan0408.parser.antlr.SqlBaseParser.SingleStatementContext;
+import com.xiaofan0408.parser.model.ColumnDefinition;
 import com.xiaofan0408.parser.operate.CreateTable;
 import com.xiaofan0408.parser.operate.OperateBase;
+
+import java.util.List;
 
 
 public class SqlVisitor extends SqlBaseBaseVisitor<OperateBase> {
@@ -31,6 +34,12 @@ public class SqlVisitor extends SqlBaseBaseVisitor<OperateBase> {
        CreateTable operateBase = new CreateTable();
        String tableName = ctx.createStatement().tablenName.getText();
        operateBase.setTableName(tableName);
+        for (int i = 0 ;i < ctx.createStatement().identifier().size();i++) {
+            SqlBaseParser.IdentifierContext identifierContext = ctx.createStatement().identifier(i);
+            SqlBaseParser.DataTypeContext dataTypeContext = ctx.createStatement().dataType(i);
+            ColumnDefinition columnDefinition = new ColumnDefinition(dataTypeContext.getText(),identifierContext.getText());
+            operateBase.addColumn(columnDefinition);
+        }
        return operateBase;
     }
 
