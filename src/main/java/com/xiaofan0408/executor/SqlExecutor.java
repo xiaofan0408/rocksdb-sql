@@ -70,6 +70,7 @@ public class SqlExecutor {
             byte[] data =  iterator.key();
             String table = new String(data,StandardCharsets.UTF_8);
             tables.add(table.replaceAll(key, ""));
+            iterator.next();
         }
         iterator.close();
         result.setData(tables);
