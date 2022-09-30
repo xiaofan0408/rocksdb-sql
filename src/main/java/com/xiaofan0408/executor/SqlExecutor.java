@@ -42,7 +42,7 @@ public class SqlExecutor {
         } else if (plan instanceof ShowTablePlan) {
             return executeShowTable((ShowTablePlan)plan);
         } else if (plan instanceof InsertPlan) {
-            return executeInsert((InsertPlan)plan)
+            return executeInsert((InsertPlan)plan);
         }
         return null;
     }
