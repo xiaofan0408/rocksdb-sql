@@ -1,20 +1,31 @@
-package com.xiaofan0408.parser.operate;
+package com.xiaofan0408.plan.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.xiaofan0408.parser.model.ColumnDefinition;
 
-public class CreateTable extends OperateBase{
+public class CreateTablePlan extends Plan{
 
+    private String database;
+    
     private String tableName;
  
     private List<ColumnDefinition> columns;
 
-    public CreateTable(){
+    public CreateTablePlan(){
         columns = new ArrayList<>();
     }
       
+
+    public void setDatabase(String database) {
+        this.database = database;
+    }
+
+    public String getDatabase() {
+        return database;
+    }
+
     public void setTableName(String tableName){
      this.tableName = tableName;
     }
@@ -38,8 +49,8 @@ public class CreateTable extends OperateBase{
 
     @Override
     public String toString() {
-        return "CreateTable{" +
-                "database=" + this.getDatabase() + ","+
+        return "CreateTablePlan{" +
+                "database=" + database + ","+
                 "tableName='" + tableName + '\'' +
                 ", columns=" + columns +
                 '}';

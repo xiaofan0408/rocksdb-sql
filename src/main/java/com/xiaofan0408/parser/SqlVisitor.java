@@ -7,7 +7,6 @@ import com.xiaofan0408.parser.model.ColumnDefinition;
 import com.xiaofan0408.parser.operate.CreateTable;
 import com.xiaofan0408.parser.operate.OperateBase;
 
-import java.util.List;
 
 
 public class SqlVisitor extends SqlBaseBaseVisitor<OperateBase> {
