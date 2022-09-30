@@ -1,10 +1,15 @@
 package com.xiaofan0408.parser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.xiaofan0408.parser.antlr.SqlBaseBaseVisitor;
 import com.xiaofan0408.parser.antlr.SqlBaseParser;
+import com.xiaofan0408.parser.antlr.SqlBaseParser.ExpressionStructContext;
 import com.xiaofan0408.parser.antlr.SqlBaseParser.SingleStatementContext;
 import com.xiaofan0408.parser.model.ColumnDefinition;
 import com.xiaofan0408.parser.operate.CreateTable;
+import com.xiaofan0408.parser.operate.InsertOpt;
 import com.xiaofan0408.parser.operate.OperateBase;
 import com.xiaofan0408.parser.operate.ShowTable;
 
@@ -51,8 +56,21 @@ public class SqlVisitor extends SqlBaseBaseVisitor<OperateBase> {
 
     @Override
     public OperateBase visitInsertValueStatement(SqlBaseParser.InsertValueStatementContext ctx) {
-        System.out.println("visitInsertValueStatement");
-        return super.visitInsertValueStatement(ctx);
+        InsertOpt insertOpt = new InsertOpt();
+        String tableName = ctx.insertStatement().tableName.getText();
+        insertOpt.setTableName(tableName);
+        List<List<Object>> values = new ArrayList<>();
+        List<ExpressionStructContext> list = ctx.insertStatement().expressionStruct();
+        for (ExpressionStructContext eStructContext : list) {
+            List<Object> objects = new ArrayList<>();
+            eStructContext.expression().forEach(context -> {
+                objects.add(context.getText());
+            });
+            values.add(objects);
+        }
+
+        insertOpt.setValues(values);
+        return insertOpt;
     }
 
     @Override
