@@ -6,6 +6,7 @@ import com.xiaofan0408.parser.antlr.SqlBaseParser.SingleStatementContext;
 import com.xiaofan0408.parser.model.ColumnDefinition;
 import com.xiaofan0408.parser.operate.CreateTable;
 import com.xiaofan0408.parser.operate.OperateBase;
+import com.xiaofan0408.parser.operate.ShowTable;
 
 
 
@@ -24,8 +25,8 @@ public class SqlVisitor extends SqlBaseBaseVisitor<OperateBase> {
 
     @Override
     public OperateBase visitShowTableStatement(SqlBaseParser.ShowTableStatementContext ctx) {
-        System.out.println("visitShowTableStatement");
-        return super.visitShowTableStatement(ctx);
+        ShowTable showTable = new ShowTable();
+        return showTable;
     }
 
     @Override

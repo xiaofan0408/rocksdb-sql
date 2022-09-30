@@ -2,8 +2,10 @@ package com.xiaofan0408.plan;
 
 import com.xiaofan0408.parser.operate.CreateTable;
 import com.xiaofan0408.parser.operate.OperateBase;
+import com.xiaofan0408.parser.operate.ShowTable;
 import com.xiaofan0408.plan.model.CreateTablePlan;
 import com.xiaofan0408.plan.model.Plan;
+import com.xiaofan0408.plan.model.ShowTablePlan;
 
 public class SqlPlanner {
 
@@ -11,6 +13,8 @@ public class SqlPlanner {
 
         if (operateBase instanceof CreateTable) {
             return buildCreateTablePlan((CreateTable)operateBase);
+        } else if (operateBase instanceof ShowTable) {
+            return new ShowTablePlan(operateBase.getDatabase());
         }
 
         return null;
