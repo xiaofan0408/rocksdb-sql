@@ -13,6 +13,6 @@ public class Table implements Namespace{
 
     @Override
     public String cfName() {
-        return String.format("{}_{}",databaseName,name);
+        return databaseName + "_" + name;
     }
 }
