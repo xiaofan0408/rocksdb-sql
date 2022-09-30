@@ -1,8 +1,10 @@
-package com.xiaofan0408.parser.operate;
+package com.xiaofan0408.plan.model;
+
 import java.util.List;
 
-
-public class InsertOpt extends OperateBase{
+public class InsertPlan extends Plan{
+    
+    private String database;
 
     private String tableName;
 
@@ -24,12 +26,13 @@ public class InsertOpt extends OperateBase{
         this.values = values;
     }
 
-    @Override
-    public String toString() {
-        return "InsertOpt{" +
-                "tableName='" + tableName + '\'' +
-                ", values=" + values +
-                '}';
+    public String getDatabase() {
+        return database;
     }
 
+    public void setDatabase(String database) {
+        this.database = database;
+    }
+
+    
 }

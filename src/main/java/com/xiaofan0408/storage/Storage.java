@@ -71,10 +71,14 @@ public class Storage {
         }
     }
 
-    private void createColumnFamily(String cfName) throws RocksDBException {
-        ColumnFamilyDescriptor columnFamilyDescriptor = new ColumnFamilyDescriptor(cfName.getBytes(),new ColumnFamilyOptions());
-        ColumnFamilyHandle columnFamilyHandle = db.createColumnFamily(columnFamilyDescriptor);
-        columnFamilyHandleMap.put(cfName,columnFamilyHandle);
+    public void createColumnFamily(String cfName) {
+        try{
+            ColumnFamilyDescriptor columnFamilyDescriptor = new ColumnFamilyDescriptor(cfName.getBytes(),new ColumnFamilyOptions());
+            ColumnFamilyHandle columnFamilyHandle = db.createColumnFamily(columnFamilyDescriptor);
+            columnFamilyHandleMap.put(cfName,columnFamilyHandle);
+        }catch(Exception e){
+            throw new DbException("",e);
+        }
     }
 
 

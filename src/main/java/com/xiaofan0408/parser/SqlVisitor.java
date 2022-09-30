@@ -59,10 +59,10 @@ public class SqlVisitor extends SqlBaseBaseVisitor<OperateBase> {
         InsertOpt insertOpt = new InsertOpt();
         String tableName = ctx.insertStatement().tableName.getText();
         insertOpt.setTableName(tableName);
-        List<List<Object>> values = new ArrayList<>();
+        List<List<String>> values = new ArrayList<>();
         List<ExpressionStructContext> list = ctx.insertStatement().expressionStruct();
         for (ExpressionStructContext eStructContext : list) {
-            List<Object> objects = new ArrayList<>();
+            List<String> objects = new ArrayList<>();
             eStructContext.expression().forEach(context -> {
                 objects.add(context.getText());
             });
