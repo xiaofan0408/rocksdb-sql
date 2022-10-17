@@ -1,5 +1,6 @@
 package com.xiaofan0408.executor;
 
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import com.xiaofan0408.parser.model.Filter;
+import com.xiaofan0408.plan.model.*;
 import org.rocksdb.Status.Code;
 
 import com.alibaba.fastjson.JSONObject;
@@ -17,10 +20,6 @@ import com.xiaofan0408.model.TableInfo;
 import com.xiaofan0408.parser.model.ColumnDefinition;
 import com.xiaofan0408.model.ColumnInfo;
 import com.xiaofan0408.model.ColumnType;
-import com.xiaofan0408.plan.model.CreateTablePlan;
-import com.xiaofan0408.plan.model.InsertPlan;
-import com.xiaofan0408.plan.model.Plan;
-import com.xiaofan0408.plan.model.ShowTablePlan;
 import com.xiaofan0408.storage.RocksIteratorWrapper;
 import com.xiaofan0408.storage.Storage;
 import com.xiaofan0408.storage.namespace.Metadata;
@@ -43,8 +42,32 @@ public class SqlExecutor {
             return executeShowTable((ShowTablePlan)plan);
         } else if (plan instanceof InsertPlan) {
             return executeInsert((InsertPlan)plan);
+        } else if (plan instanceof SelectPlan) {
+            return executeSelect((SelectPlan)plan);
         }
         return null;
+    }
+
+    private Result executeSelect(SelectPlan plan) {
+        Result result = new Result();
+        String database = plan.getDatabaseName();
+        String tableName = plan.getTableName();
+        List<String> cols = plan.getCols();
+        List<Filter> filters = plan.getFilters();
+        Namespace namespace = new Table(database,tableName);
+        String tableKey = Codec.encodeTableKey(database,tableName);
+        byte[] table = storage.get(Metadata.instance, tableKey.getBytes(StandardCharsets.UTF_8));
+        if (table == null) {
+            throw new DbException("table: " + tableName + "not exist");
+        }
+        TableInfo tableInfo = JSONObject.parseObject(new String(table,StandardCharsets.UTF_8), TableInfo.class);
+        if (filters != null && filters.size() > 0) {
+
+        } else {
+            RocksIteratorWrapper iteratorWrapper = storage.iterator(namespace);
+        }
+
+        return result;
     }
 
     private Result executeCreateTable(CreateTablePlan plan){
@@ -60,7 +83,8 @@ public class SqlExecutor {
             ColumnInfo columnInfo = new ColumnInfo(columnDef.getColumnName(), columnType);
             infos.add(columnInfo);
         }
-        TableInfo tableInfo = new TableInfo(id, tableName, infos);
+        ColumnInfo pk = infos.get(0);
+        TableInfo tableInfo = new TableInfo(id, tableName, infos,pk);
         String jsonTableInfo = JSONObject.toJSONString(tableInfo);
         String key = Codec.encodeTableKey(database, tableName);
         storage.put(Metadata.instance,key.getBytes(StandardCharsets.UTF_8), jsonTableInfo.getBytes(StandardCharsets.UTF_8));

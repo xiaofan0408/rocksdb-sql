@@ -1,6 +1,7 @@
 package com.xiaofan0408.parser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.xiaofan0408.parser.antlr.SqlBaseBaseVisitor;
@@ -8,11 +9,8 @@ import com.xiaofan0408.parser.antlr.SqlBaseParser;
 import com.xiaofan0408.parser.antlr.SqlBaseParser.ExpressionStructContext;
 import com.xiaofan0408.parser.antlr.SqlBaseParser.SingleStatementContext;
 import com.xiaofan0408.parser.model.ColumnDefinition;
-import com.xiaofan0408.parser.operate.CreateTable;
-import com.xiaofan0408.parser.operate.InsertOpt;
-import com.xiaofan0408.parser.operate.OperateBase;
-import com.xiaofan0408.parser.operate.ShowTable;
-
+import com.xiaofan0408.parser.model.Filter;
+import com.xiaofan0408.parser.operate.*;
 
 
 public class SqlVisitor extends SqlBaseBaseVisitor<OperateBase> {
@@ -75,7 +73,20 @@ public class SqlVisitor extends SqlBaseBaseVisitor<OperateBase> {
 
     @Override
     public OperateBase visitQueryStatement(SqlBaseParser.QueryStatementContext ctx) {
-        System.out.println("visitQueryStatement");
-        return super.visitQueryStatement(ctx);
+        SelectOpt selectOpt = new SelectOpt();
+        String tableName  = ctx.selectStatement().fromCluse().tableIdentifier().get(0).getText();
+        selectOpt.setTableName(tableName);
+        List<SqlBaseParser.ExpressionContext> list = ctx.selectStatement().selectClause().expression();
+        List<String> cols = new ArrayList<>();
+        for (SqlBaseParser.ExpressionContext expressionContext: list) {
+            cols.add(expressionContext.getText());
+        }
+        selectOpt.setCols(cols);
+        if (ctx.selectStatement().whereCluse() != null) {
+            SqlBaseParser.ExpressionContext expressionContext = ctx.selectStatement().whereCluse().expression();
+            Filter filter = new Filter();
+            selectOpt.setFilters(Arrays.asList(filter));
+        }
+        return selectOpt;
     }
 }

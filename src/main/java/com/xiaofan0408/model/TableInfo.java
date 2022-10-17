@@ -10,10 +10,21 @@ public class TableInfo {
 
     private List<ColumnInfo> columnInfos;
 
-    public TableInfo(long id,String name,List<ColumnInfo> columnInfos){
+    private ColumnInfo pk;
+
+    public TableInfo(long id, String name, List<ColumnInfo> columnInfos, ColumnInfo pk) {
         this.id = id;
         this.name = name;
         this.columnInfos = columnInfos;
+        this.pk = pk;
+    }
+
+    public ColumnInfo getPk() {
+        return pk;
+    }
+
+    public void setPk(ColumnInfo pk) {
+        this.pk = pk;
     }
 
     public long getId() {

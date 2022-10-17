@@ -1,13 +1,7 @@
 package com.xiaofan0408.plan;
 
-import com.xiaofan0408.parser.operate.CreateTable;
-import com.xiaofan0408.parser.operate.InsertOpt;
-import com.xiaofan0408.parser.operate.OperateBase;
-import com.xiaofan0408.parser.operate.ShowTable;
-import com.xiaofan0408.plan.model.CreateTablePlan;
-import com.xiaofan0408.plan.model.InsertPlan;
-import com.xiaofan0408.plan.model.Plan;
-import com.xiaofan0408.plan.model.ShowTablePlan;
+import com.xiaofan0408.parser.operate.*;
+import com.xiaofan0408.plan.model.*;
 
 public class SqlPlanner {
 
@@ -19,9 +13,18 @@ public class SqlPlanner {
             return new ShowTablePlan(operateBase.getDatabase());
         } else if (operateBase instanceof InsertOpt) {
             return buildInsertPlan((InsertOpt)operateBase);
+        } else if (operateBase instanceof SelectOpt){
+            return buildSelectPlan((SelectOpt)operateBase);
         }
-
         return null;
+    }
+
+    private Plan buildSelectPlan(SelectOpt operateBase) {
+        SelectPlan selectPlan = new SelectPlan(operateBase.getDatabase(),
+                operateBase.getTableName(),
+                operateBase.getCols(),
+                operateBase.getFilters());
+        return selectPlan;
     }
 
 
