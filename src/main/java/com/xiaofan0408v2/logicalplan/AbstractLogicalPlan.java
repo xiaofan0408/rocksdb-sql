@@ -2,14 +2,14 @@ package com.xiaofan0408v2.logicalplan;
 
 import java.util.stream.IntStream;
 
-public class AbstractLogicalPlan implements LogicalPlan{
+public abstract class AbstractLogicalPlan implements LogicalPlan{
 
 
     public String pretty(){
         return format(this, 0);
     }
 
-    public String format(LogicalPlan plan, int indent){
+    public static String format(LogicalPlan plan, int indent){
         StringBuilder b = new StringBuilder();
         IntStream.range(0, indent).forEach(i -> {
             b.append("\t");

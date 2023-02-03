@@ -15,7 +15,7 @@ public class LiteralLong implements LogicExpr{
 
     @Override
     public Field toField(LogicalPlan plan) {
-        return Field.of(DataType.Int64Type, n);
+        return Field.of(DataType.Int64Type, n.toString());
     }
 
     @Override

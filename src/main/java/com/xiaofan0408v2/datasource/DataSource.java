@@ -1,6 +1,9 @@
 package com.xiaofan0408v2.datasource;
 
+import com.xiaofan0408v2.datatype.RecordBatch;
 import com.xiaofan0408v2.datatype.Schema;
+
+import java.util.List;
 
 public interface DataSource{
 

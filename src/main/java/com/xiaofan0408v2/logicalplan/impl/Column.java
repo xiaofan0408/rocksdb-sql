@@ -1,5 +1,7 @@
 package com.xiaofan0408v2.logicalplan.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import com.xiaofan0408v2.datatype.Field;
@@ -28,4 +30,16 @@ public class Column implements LogicExpr{
         return name;
     }
 
+
+    public static Column of(String name) {
+        return new Column(name);
+    }
+
+    public static List<LogicExpr> listOf(String ... names){
+        List<LogicExpr> columns = new ArrayList<>();
+        for (String name: names){
+            columns.add(new Column(name));
+        }
+        return columns;
+    }
 }

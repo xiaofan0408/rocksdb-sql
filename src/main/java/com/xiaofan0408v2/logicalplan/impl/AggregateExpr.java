@@ -17,8 +17,8 @@ public class AggregateExpr implements LogicExpr{
     }
 
     @Override
-    public Field toField(LogicalPlan plan) {
-       return Field.of(expr.toField(input).dataType,name);
+    public Field toField(LogicalPlan input) {
+       return Field.of(expr.toField(input).getDataType(),name);
     }
 
     @Override
