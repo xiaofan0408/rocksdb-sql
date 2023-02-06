@@ -1,7 +1,7 @@
 package com.xiaofan0408;
 
-import com.xiaofan0408.parser.SqlParser;
-import com.xiaofan0408.parser.operate.OperateBase;
+import com.xiaofan0408.v1.parser.SqlParser;
+import com.xiaofan0408.v1.parser.operate.OperateBase;
 import org.junit.Test;
 
 public class ParserTest {
